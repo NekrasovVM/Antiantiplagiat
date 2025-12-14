@@ -10,9 +10,13 @@ class ChunkMaker:
     def get_chunk(self):
         chunk = self.lastParagraph
 
-        while len(chunk.split()) < 350 and not self.file_ended:
-            chunk += self.lastParagraph
+        while not self.file_ended:
             self.lastParagraph = self.f.readline()
+
+            if (len(chunk.split()) + len(self.lastParagraph.split())) < 350:
+                chunk += self.lastParagraph
+            else:
+                break
 
             if self.lastParagraph == '':
                 self.file_ended = True
